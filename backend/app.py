@@ -18,7 +18,6 @@ from qdrant_client.models import (
     PointStruct,
     VectorParams,
 )
-
 # --------------------------------------------------
 # 1. LOAD ENVIRONMENT VARIABLES
 # --------------------------------------------------
@@ -85,7 +84,13 @@ def ensure_collection():
                 distance=Distance.COSINE,
             ),
         )
-
+ensure_collection()
+qdrant.create_payload_index(
+    collection_name=COLLECTION,
+    field_name="uid",
+    field_schema="keyword",
+    wait=True,
+)
 
 def embed(text: str) -> list[float]:
     """Convert text into a 384-dimensional vector."""
