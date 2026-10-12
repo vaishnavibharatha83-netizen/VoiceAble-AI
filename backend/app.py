@@ -18,6 +18,7 @@ from qdrant_client.models import (
     PointStruct,
     VectorParams,
 )
+
 # --------------------------------------------------
 # 1. LOAD ENVIRONMENT VARIABLES
 # --------------------------------------------------
@@ -41,6 +42,15 @@ COLLECTION = "voice_memory"
 VECTOR_SIZE = 384
 
 app = FastAPI(title="VoiceAble AI Backend", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://voiceable-ai-frontend.onrender.com"
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Allow the local React development server to call FastAPI.
 app.add_middleware(
